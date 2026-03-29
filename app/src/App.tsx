@@ -1,0 +1,38 @@
+import { Routes, Route } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button, Box, Container } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import TradeDetail from './pages/TradeDetail';
+import CreateTrade from './pages/CreateTrade';
+import { ErrorBoundary } from './ErrorBoundary';
+
+export default function App() {
+  return (
+    <ErrorBoundary>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <AppBar position="static" color="primary">
+          <Toolbar sx={{ gap: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, flexGrow: 1 }}>
+              StellarEscrow
+            </Typography>
+            <Button color="inherit" component={NavLink} to="/" end>
+              Dashboard
+            </Button>
+            <Button color="inherit" component={NavLink} to="/trades/new">
+              New Trade
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <Container component="main" sx={{ flex: 1, py: 4 }}>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/trades/new" element={<CreateTrade />} />
+              <Route path="/trades/:id" element={<TradeDetail />} />
+            </Routes>
+          </ErrorBoundary>
+        </Container>
+      </Box>
+    </ErrorBoundary>
+  );
+}
